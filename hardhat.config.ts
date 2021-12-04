@@ -1,15 +1,16 @@
 import * as dotenv from "dotenv";
-import { HardhatUserConfig, task } from "hardhat/config";
-import "@nomiclabs/hardhat-etherscan";
+import { task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
-import "hardhat-gas-reporter";
-import "solidity-coverage";
 import "hardhat-storage-layout";
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
+task('storage-layout', "print storage layout diff")
+  .setAction(async (args, hre) => {
+    await hre.storageLayout.export();
+  });
 
-const config: HardhatUserConfig = {
+const config = {
   solidity: {
     compilers: [
       {
@@ -35,13 +36,13 @@ const config: HardhatUserConfig = {
       process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
   },
-  gasReporter: {
-    enabled: process.env.REPORT_GAS !== undefined,
-    currency: "USD",
-  },
-  etherscan: {
-    apiKey: process.env.ETHERSCAN_API_KEY,
-  },
+//  gasReporter: {
+//    enabled: process.env.REPORT_GAS !== undefined,
+//    currency: "USD",
+//  },
+//  etherscan: {
+//    apiKey: process.env.ETHERSCAN_API_KEY,
+//  },
 };
 
 export default config;
