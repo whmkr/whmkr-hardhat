@@ -1,5 +1,5 @@
 | state_variable | type | storage_slot | offset | length |
-| -------------- | ---- | ------------ | ------ | ------ |
+| :------------- | :--- | :----------: | :----: | :----: |
 | count | t_uint256 | 0 | 0 | 256 |
 | greeting | t_string_storage | 1 | 0 | 256 |
 | a | t_bool | 2 | 0 | 8 |
