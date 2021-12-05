@@ -6,6 +6,10 @@ import "hardhat/console.sol";
 contract Greeter {
     uint256 public count;
     string private greeting;
+    bool public a;
+
+    uint128 public b;
+    uint128 public c;
 
     constructor(string memory _greeting) {
         console.log("Deploying a Greeter with greeting:", _greeting);
