@@ -12,6 +12,9 @@ pragma solidity ^0.8.0;
 import "./IERC20.sol";
 
 contract ERC20Rebase is IERC20 {
+
+    event LogRebase(uint64 oldIndex, uint64 newInex);
+
     string public override name;
     
     string public override symbol;
@@ -90,5 +93,17 @@ contract ERC20Rebase is IERC20 {
         totalGon += _amount * index;
         userGon[_beneficiary] += _amount * index;
         emit Transfer(address(0), _beneficiary, _amount);
+    }
+    
+    function _burn(address _target, uint256 _amount) internal {
+        totalGon -= _amount * index;
+        userGon[_target] -= _amount * index;
+        emit Transfer(_target, address(0), _amount);
+    }
+
+    function _rebase(uint256 _newTotalSupply) internal {
+        uint64 oldIndex = index;
+        index = uint64(totalGon / _newTotalSupply);
+        emit LogRebase(oldIndex, index);
     }
 }

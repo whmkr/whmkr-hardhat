@@ -1,8 +1,8 @@
-# ERC20Rebase
+# RebaseRewards
 
+*whmkr&lt;whmkr@protonmail.com&gt;*
 
-
-
+> RebaseRewards contract to use for rewarding stakers with deposit token(rewardToken == depositToken)
 
 
 
@@ -95,6 +95,39 @@ function decimals() external view returns (uint8)
 |---|---|---|
 | _0 | uint8 | undefined
 
+### deposit
+
+```solidity
+function deposit(uint256 _amount) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _amount | uint256 | undefined
+
+### depositToken
+
+```solidity
+function depositToken() external view returns (contract IERC20)
+```
+
+
+
+
+
+
+#### Returns
+
+| Name | Type | Description |
+|---|---|---|
+| _0 | contract IERC20 | undefined
+
 ### index
 
 ```solidity
@@ -128,6 +161,22 @@ function name() external view returns (string)
 | Name | Type | Description |
 |---|---|---|
 | _0 | string | undefined
+
+### rebase
+
+```solidity
+function rebase(uint256 _rewardAmount) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _rewardAmount | uint256 | undefined
 
 ### symbol
 
@@ -249,6 +298,22 @@ function userGon(address) external view returns (uint256)
 |---|---|---|
 | _0 | uint256 | undefined
 
+### withdraw
+
+```solidity
+function withdraw(uint256 _amount) external nonpayable
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _amount | uint256 | undefined
+
 
 
 ## Events
@@ -270,6 +335,23 @@ event Approval(address indexed owner, address indexed spender, uint256 amount)
 | owner `indexed` | address | undefined |
 | spender `indexed` | address | undefined |
 | amount  | uint256 | undefined |
+
+### Deposit
+
+```solidity
+event Deposit(address _user, uint256 _amount)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _user  | address | undefined |
+| _amount  | uint256 | undefined |
 
 ### LogRebase
 
@@ -305,6 +387,23 @@ event Transfer(address indexed from, address indexed to, uint256 amount)
 | from `indexed` | address | undefined |
 | to `indexed` | address | undefined |
 | amount  | uint256 | undefined |
+
+### Withdraw
+
+```solidity
+event Withdraw(address _user, uint256 _amount)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| _user  | address | undefined |
+| _amount  | uint256 | undefined |
 
 
 

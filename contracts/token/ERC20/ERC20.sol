@@ -74,5 +74,4 @@ contract ERC20 is IERC20 {
         emit Transfer(_from, _to, _amount);
         success = true;
     }
-
 }
