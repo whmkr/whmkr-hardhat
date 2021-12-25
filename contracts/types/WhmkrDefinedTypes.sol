@@ -5,3 +5,5 @@ type Ether is uint96;
 type Timestamp is uint40;
 
 type BlockNumber is uint32;
+
+type Allowance is uint256;

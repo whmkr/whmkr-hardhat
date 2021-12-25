@@ -11,7 +11,11 @@ pragma solidity ^0.8.0;
 
 import "./IERC20.sol";
 
+import "../../types/Balance.sol";
+
 contract ERC20 is IERC20 {
+    using BalanceMath for Balance;
+
     string public override name;
 
     string public override symbol;
@@ -20,7 +24,7 @@ contract ERC20 is IERC20 {
 
     uint256 public override totalSupply;
 
-    mapping(address => uint256) private _balances;
+    mapping(address => Balance) private _balances;
 
     mapping(address => mapping(address => uint256)) public override allowance;
 
@@ -35,7 +39,7 @@ contract ERC20 is IERC20 {
     }
 
     function balanceOf(address _user) external view override returns(uint256 balance) {
-        balance = _balances[_user];
+        balance = Balance.unwrap(_balances[_user]);
     }
 
     function approve(address _spender, uint256 _amount) external override returns(bool success) {
@@ -45,7 +49,7 @@ contract ERC20 is IERC20 {
     }
 
     function transfer(address _to, uint256 _amount) external override returns(bool success) {
-        success = _transfer(msg.sender, _to, _amount);
+        success = _transfer(msg.sender, _to, Balance.wrap(_amount));
     }
     
     function transferFrom(address _from, address _to, uint256 _amount) external override returns(bool success) {
@@ -58,20 +62,13 @@ contract ERC20 is IERC20 {
         }
         allowance[_from][msg.sender] = allowed - _amount;
         emit Approval(_from, msg.sender, allowed - _amount);
-        success = _transfer(_from, _to, _amount);
+        success = _transfer(_from, _to, Balance.wrap(_amount));
     }
 
-    function _transfer(address _from, address _to, uint256 _amount) internal returns(bool success) {
-        uint256 balance = _balances[_from];
-        if(balance < _amount) {
-            revert LowBalance({
-                have : balance,
-                required : _amount
-            });
-        }
-        _balances[_from] = balance - _amount;
-        _balances[_to] += _amount;
-        emit Transfer(_from, _to, _amount);
+    function _transfer(address _from, address _to, Balance _amount) internal returns(bool success) {
+        _balances[_from] = _balances[_from].sub(_amount);
+        _balances[_to] = _balances[_to].add(_amount);
+        emit Transfer(_from, _to, Balance.unwrap(_amount));
         success = true;
     }
 }

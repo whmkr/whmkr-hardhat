@@ -308,7 +308,7 @@ event Transfer(address indexed from, address indexed to, uint256 amount)
 
 
 
-## Events
+## Errors
 
 ### LowAllowance
 
@@ -330,7 +330,7 @@ error LowAllowance(uint256 have, uint256 required)
 ### LowBalance
 
 ```solidity
-error LowBalance(uint256 have, uint256 required)
+error LowBalance(Balance have, Balance required)
 ```
 
 
@@ -341,7 +341,7 @@ error LowBalance(uint256 have, uint256 required)
 
 | Name | Type | Description |
 |---|---|---|
-| have | uint256 | undefined |
-| required | uint256 | undefined |
+| have | Balance | undefined |
+| required | Balance | undefined |
 
 

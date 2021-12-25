@@ -8,8 +8,6 @@
  */
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
-error LowBalance(uint256 have, uint256 required);
 error LowAllowance(uint256 have, uint256 required);
 
 interface IERC20 {

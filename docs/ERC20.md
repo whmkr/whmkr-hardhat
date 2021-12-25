@@ -235,7 +235,7 @@ event Transfer(address indexed from, address indexed to, uint256 amount)
 
 
 
-## Events
+## Errors
 
 ### LowAllowance
 
@@ -257,7 +257,7 @@ error LowAllowance(uint256 have, uint256 required)
 ### LowBalance
 
 ```solidity
-error LowBalance(uint256 have, uint256 required)
+error LowBalance(Balance have, Balance required)
 ```
 
 
@@ -268,7 +268,25 @@ error LowBalance(uint256 have, uint256 required)
 
 | Name | Type | Description |
 |---|---|---|
-| have | uint256 | undefined |
-| required | uint256 | undefined |
+| have | Balance | undefined |
+| required | Balance | undefined |
+
+### MathError
+
+```solidity
+error MathError(enum MathType math, uint256 a, uint256 b)
+```
+
+
+
+
+
+#### Parameters
+
+| Name | Type | Description |
+|---|---|---|
+| math | enum MathType | undefined |
+| a | uint256 | undefined |
+| b | uint256 | undefined |
 
 
