@@ -10,7 +10,7 @@
 pragma solidity ^0.8.0;
 
 import "./IERC20.sol";
-import "../../types/Balance.sol";
+import "../../types/TokenAmount.sol";
 
 contract ERC20Rebase is IERC20 {
 
@@ -79,9 +79,9 @@ contract ERC20Rebase is IERC20 {
         uint256 gonChange = _amount * index;
         uint256 gonHave = userGon[_from];
         if(gonHave < gonChange) {
-            revert LowBalance({
-                have : Balance.wrap(gonHave / index),
-                required : Balance.wrap(_amount)
+            revert LowTokenAmount({
+                have : TokenAmount.wrap(gonHave / index),
+                required : TokenAmount.wrap(_amount)
             });
         }
         userGon[_from] = gonHave - gonChange;

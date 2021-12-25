@@ -13,7 +13,7 @@
 ### allowance
 
 ```solidity
-function allowance(address, address) external view returns (uint256)
+function allowance(address _owner, address _spender) external view returns (uint256)
 ```
 
 
@@ -24,8 +24,8 @@ function allowance(address, address) external view returns (uint256)
 
 | Name | Type | Description |
 |---|---|---|
-| _0 | address | undefined
-| _1 | address | undefined
+| _owner | address | undefined
+| _spender | address | undefined
 
 #### Returns
 
@@ -237,10 +237,10 @@ event Transfer(address indexed from, address indexed to, uint256 amount)
 
 ## Errors
 
-### LowAllowance
+### LowTokenAmount
 
 ```solidity
-error LowAllowance(uint256 have, uint256 required)
+error LowTokenAmount(TokenAmount have, TokenAmount required)
 ```
 
 
@@ -251,25 +251,8 @@ error LowAllowance(uint256 have, uint256 required)
 
 | Name | Type | Description |
 |---|---|---|
-| have | uint256 | undefined |
-| required | uint256 | undefined |
-
-### LowBalance
-
-```solidity
-error LowBalance(Balance have, Balance required)
-```
-
-
-
-
-
-#### Parameters
-
-| Name | Type | Description |
-|---|---|---|
-| have | Balance | undefined |
-| required | Balance | undefined |
+| have | TokenAmount | undefined |
+| required | TokenAmount | undefined |
 
 ### MathError
 

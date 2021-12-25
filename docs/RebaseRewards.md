@@ -426,10 +426,10 @@ error LowAllowance(uint256 have, uint256 required)
 | have | uint256 | undefined |
 | required | uint256 | undefined |
 
-### LowBalance
+### LowTokenAmount
 
 ```solidity
-error LowBalance(Balance have, Balance required)
+error LowTokenAmount(TokenAmount have, TokenAmount required)
 ```
 
 
@@ -440,7 +440,7 @@ error LowBalance(Balance have, Balance required)
 
 | Name | Type | Description |
 |---|---|---|
-| have | Balance | undefined |
-| required | Balance | undefined |
+| have | TokenAmount | undefined |
+| required | TokenAmount | undefined |
 
 

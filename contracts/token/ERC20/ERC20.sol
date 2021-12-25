@@ -11,10 +11,10 @@ pragma solidity ^0.8.0;
 
 import "./IERC20.sol";
 
-import "../../types/Balance.sol";
+import "../../types/TokenAmount.sol";
 
 contract ERC20 is IERC20 {
-    using BalanceMath for Balance;
+    using TokenAmountMath for TokenAmount;
 
     string public override name;
 
@@ -24,9 +24,9 @@ contract ERC20 is IERC20 {
 
     uint256 public override totalSupply;
 
-    mapping(address => Balance) private _balances;
+    mapping(address => TokenAmount) private _balances;
 
-    mapping(address => mapping(address => uint256)) public override allowance;
+    mapping(address => mapping(address => TokenAmount)) private _allowances;
 
     constructor(
         string memory _name,
@@ -39,36 +39,33 @@ contract ERC20 is IERC20 {
     }
 
     function balanceOf(address _user) external view override returns(uint256 balance) {
-        balance = Balance.unwrap(_balances[_user]);
+        balance = TokenAmount.unwrap(_balances[_user]);
+    }
+
+    function allowance(address _owner, address _spender) external view override returns(uint256){
+        return TokenAmount.unwrap(_allowances[_owner][_spender]);
     }
 
     function approve(address _spender, uint256 _amount) external override returns(bool success) {
-        allowance[msg.sender][_spender] = _amount;
+        _allowances[msg.sender][_spender] = TokenAmount.wrap(_amount);
         emit Approval(msg.sender, _spender, _amount);
         success = true;
     }
 
     function transfer(address _to, uint256 _amount) external override returns(bool success) {
-        success = _transfer(msg.sender, _to, Balance.wrap(_amount));
+        success = _transfer(msg.sender, _to, TokenAmount.wrap(_amount));
     }
     
     function transferFrom(address _from, address _to, uint256 _amount) external override returns(bool success) {
-        uint256 allowed = allowance[_from][msg.sender];
-        if(allowed < _amount) {
-            revert LowAllowance({
-                have : allowed,
-                required : _amount
-            });
-        }
-        allowance[_from][msg.sender] = allowed - _amount;
-        emit Approval(_from, msg.sender, allowed - _amount);
-        success = _transfer(_from, _to, Balance.wrap(_amount));
+        _allowances[_from][msg.sender] = _allowances[_from][msg.sender].sub(TokenAmount.wrap(_amount));
+        emit Approval(_from, msg.sender, TokenAmount.unwrap(_allowances[_from][msg.sender]));
+        success = _transfer(_from, _to, TokenAmount.wrap(_amount));
     }
 
-    function _transfer(address _from, address _to, Balance _amount) internal returns(bool success) {
+    function _transfer(address _from, address _to, TokenAmount _amount) internal returns(bool success) {
         _balances[_from] = _balances[_from].sub(_amount);
         _balances[_to] = _balances[_to].add(_amount);
-        emit Transfer(_from, _to, Balance.unwrap(_amount));
+        emit Transfer(_from, _to, TokenAmount.unwrap(_amount));
         success = true;
     }
 }
